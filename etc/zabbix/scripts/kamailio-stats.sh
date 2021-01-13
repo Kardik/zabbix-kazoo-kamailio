@@ -29,7 +29,7 @@ fi
 TIMENOW=`date '+%s'`
 
 if [ "$(($TIMENOW - $TIMECACHE))" -gt "$CACHETTL" ]; then
-    sudo $KAMCTL stats | jq . > $CACHE || exit 1
+    sudo $KAMCTL stats 2> /dev/null | jq . > $CACHE || exit 1
 
 fi
 
@@ -183,7 +183,12 @@ case $METRIC in
     'websocket-ws_sip_successful_handshakes')   cat $CACHE | grep 'websocket:ws_sip_successful_handshakes' | tr -d "[:blank:]" |cut -d'=' -f2 | tr -d "[:punct:]" ;;
     'websocket-ws_sip_transmitted_frames')   cat $CACHE | grep 'websocket:ws_sip_transmitted_frames' | tr -d "[:blank:]" |cut -d'=' -f2 | tr -d "[:punct:]" ;;
     'websocket-ws_successful_handshakes')   cat $CACHE | grep 'websocket:ws_successful_handshakes' | tr -d "[:blank:]" |cut -d'=' -f2 | tr -d "[:punct:]" ;;
-    'websocket-ws_transmitted_frames')   cat $CACHE | grep 'websocket:ws_transmitted_frames' | tr -d "[:blank:]" |cut -d'=' -f2 | tr -d "[:punct:]" ;;
+    'websocket-ws_transmitted_frames')   cat $CACHE | grep 'websocket:ws_transmitted_frames' | tr -d "[:blank:]" |cut -d'=' -f2 | tr -d "[:punct:]" ;;.
+	'dialog-active_dialogs')   cat $CACHE | grep 'dialog:active_dialogs' | tr -d "[:blank:]" |cut -d'=' -f2 | tr -d "[:punct:]" ;;
+    'dialog-early_dialogs')   cat $CACHE | grep 'dialog:early_dialogs' | tr -d "[:blank:]" |cut -d'=' -f2 | tr -d "[:punct:]" ;;
+    'dialog-expired_dialogs')   cat $CACHE | grep 'dialog:expired_dialogs' | tr -d "[:blank:]" |cut -d'=' -f2 | tr -d "[:punct:]" ;;
+    'dialog-failed_dialogs')   cat $CACHE | grep 'dialog:failed_dialogs' | tr -d "[:blank:]" |cut -d'=' -f2 | tr -d "[:punct:]" ;;
+    'dialog-processed_dialogs')   cat $CACHE | grep 'dialog:processed_dialogs' | tr -d "[:blank:]" |cut -d'=' -f2 | tr -d "[:punct:]" ;;
     'pkg-mem_used') cat $KAMCMD_CACHE ;;
     *)  echo "Not selected metric"
         exit 0
